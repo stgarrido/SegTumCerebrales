@@ -113,20 +113,73 @@ def tumor_extraction(imagen_original_nii, slice):
     cv2.imwrite('Tumor_delineado_'+imagen_original_nii+'.jpg', bordet)
     return corte, tumor, cont_voxel, img.header.get_zooms(), borde, bordet, int_voxel
 
-
-#PARA EL TUMOR DEL CASO 14
+# CASOS FUNCIONALES
+# CASO 1
+corte1, tumor1, n_voxel1, header1, borde1, borde_tumor1, int_voxel1= tumor_extraction('tumores/case_001_2.nii', 6)
+vol_tumor1 = n_voxel1*(header1[0]*header1[1]*header1[2])
+print('Volumen Tumor caso 1: ' + str(vol_tumor1) + 'mm^3')
+# CASO 7
+corte7, tumor7, n_voxel7, header7, borde7, borde_tumor7, int_voxel7 = tumor_extraction('tumores/case_007_2.nii', 20)
+vol_tumor7 = n_voxel7*(header7[0]*header7[1]*header7[2])
+print('Volumen Tumor caso 7: ' + str(vol_tumor7) + 'mm^3')
+# CASO 14
 corte14, tumor14, n_voxel14, header14, borde14, borde_tumor14, int_voxel14 = tumor_extraction('tumores/case_014_2.nii', 17)
 vol_tumor14 = n_voxel14*(header14[0]*header14[1]*header14[2])
 print('Volumen Tumor caso 14: ' + str(vol_tumor14) + 'mm^3')
+#CASO 58
+corte58, tumor58, n_voxel58, header58, borde58, borde_tumor58, int_voxel58 = tumor_extraction('tumores/case_058_2.nii', 31)
+vol_tumor58 = n_voxel58*(header58[0]*header58[1]*header58[2])
+print('Volumen Tumor caso 58: ' + str(vol_tumor58) + 'mm^3')
 
+# CASOS NO FUNCIONALES
+#corte4, tumor4, n_voxel4, header4, borde4, borde_tumor4, int_voxel4 = tumor_extraction('case_004_2.nii', 72)
+#corte5, tumor5, n_voxel5, header5, borde5, borde_tumor5, int_voxel5 = tumor_extraction('case_005_2.nii', 59)
+#corte8, tumor8, n_voxel8, header8, borde8, borde_tumor8, int_voxel8 = tumor_extraction('case_008_2.nii', 11)
 
-tumor14 = tumor14.astype(np.uint8)
-tum = Image.fromarray(tumor14)
-tum.save("tumor_segmentado.png")
+# GRAFICAS
 
-borde_tumor14 = borde_tumor14.astype(np.uint8)
-bord = Image.fromarray(borde_tumor14)
-bord.save("borde_tumor.png")
+# CASO 1
+plt.figure(1, figsize=(10,10))
+plt.subplot(221), plt.imshow(corte1, cmap=plt.cm.gist_gray), plt.title('Corte')
+plt.subplot(222), plt.imshow(tumor1, cmap=plt.cm.gist_gray), plt.title('Tumor segmentado')
+plt.subplot(223), plt.imshow(borde1, cmap=plt.cm.gist_yarg), plt.title('Borde')
+plt.subplot(224), plt.imshow(borde_tumor1, cmap=plt.cm.gist_yarg), plt.title('Borde Tumor')
+plt.tight_layout(pad =6, w_pad=2,h_pad=2)
+plt.show()
+# CASO 7
+plt.figure(2, figsize=(10,10))
+plt.subplot(221), plt.imshow(corte7, cmap=plt.cm.gist_gray), plt.title('Corte')
+plt.subplot(222), plt.imshow(tumor7, cmap=plt.cm.gist_gray), plt.title('Tumor segmentado')
+plt.subplot(223), plt.imshow(borde7, cmap=plt.cm.gist_yarg), plt.title('Borde')
+plt.subplot(224), plt.imshow(borde_tumor7, cmap=plt.cm.gist_yarg), plt.title('Borde Tumor')
+plt.tight_layout(pad =6, w_pad=2,h_pad=2)
+plt.show()
+# CASO 14
+plt.figure(3, figsize=(10,10))
+plt.subplot(221), plt.imshow(corte14, cmap=plt.cm.gist_gray), plt.title('Corte')
+plt.subplot(222), plt.imshow(tumor14, cmap=plt.cm.gist_gray), plt.title('Tumor segmentado')
+plt.subplot(223), plt.imshow(borde14, cmap=plt.cm.gist_yarg), plt.title('Borde')
+plt.subplot(224), plt.imshow(borde_tumor14, cmap=plt.cm.gist_yarg), plt.title('Borde Tumor')
+plt.tight_layout(pad =6, w_pad=2,h_pad=2)
+plt.show()
+# CASO 58
+plt.figure(4, figsize=(10,10))
+plt.subplot(221), plt.imshow(corte58, cmap=plt.cm.gist_gray), plt.title('Corte')
+plt.subplot(222), plt.imshow(tumor58, cmap=plt.cm.gist_gray), plt.title('Tumor segmentado')
+plt.subplot(223), plt.imshow(borde58, cmap=plt.cm.gist_yarg), plt.title('Borde')
+plt.subplot(224), plt.imshow(borde_tumor58, cmap=plt.cm.gist_yarg), plt.title('Borde Tumor')
+plt.tight_layout(pad =6, w_pad=2,h_pad=2)
+plt.show()
+
+'''
+# GUARDAR .png CASO 14
+#tumor14 = tumor14.astype(np.uint8)
+#tum = Image.fromarray(tumor14)
+#tum.save("tumor_segmentado.png")
+#borde_tumor14 = borde_tumor14.astype(np.uint8)
+#bord = Image.fromarray(borde_tumor14)
+#bord.save("borde_tumor.png")
+'''
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
